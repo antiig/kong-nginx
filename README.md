@@ -1,25 +1,36 @@
 # Install Lib to use
+```
 apt install libtool-bin build-essential libfuse-dev libcurl4-openssl-dev libxml2-dev automake libtool pkg-config autoconf
 apt-get install autoconf automake libtool cmake mime-support unzip
 apt-get
+```
 
-#install jansson https://github.com/benmcollins/libjwt/tree/v1.12.0
+# install jansson https://github.com/benmcollins/libjwt/tree/v1.12.0
+```
 unzip jansson-2.12.zip
+```
 
 # goto jansson-2.12.zip
+```
 cmake .
 make install
+```
 
-#install libjwt https://github.com/benmcollins/libjwt/tree/v1.17.2
+# install libjwt https://github.com/benmcollins/libjwt/tree/v1.17.2
+```
 unzip libjwt-1.17.2.zip
 apt install libssl-dev
 cmake .
 make install
+```
 
-#loca ngx module https://github.com/TeslaGov/ngx-http-auth-jwt-module/tree/2.2.0
+# load ngx module https://github.com/TeslaGov/ngx-http-auth-jwt-module/tree/2.2.0
+```
 unzip ngx-http-auth-jwt-module-2.2.0.zip
+```
 
 # edit file ngx_http_auth_jwt_module.c
+```
 # Remove
   #ifndef NGX_LINKED_LIST_COOKIES
   if (ngx_http_parse_multi_header_lines(&r->headers_in.cookies, &jwt_location, &jwtCookieVal) != NGX_DECLINED)
@@ -28,13 +39,16 @@ unzip ngx-http-auth-jwt-module-2.2.0.zip
   }
   #else
 # save file
-#get ngix wget http://nginx.org/download/nginx-1.27.2.tar.gz
+```
+# get ngix wget http://nginx.org/download/nginx-1.27.2.tar.gz
+```
 wget http://nginx.org/download/nginx-1.27.2.tar.gz
 tar -xvzf nginx-1.27.2.tar.gz
+```
 
 # run configure
 # path of --add-module=/home/adm_uatapigw/ngx-http-auth-jwt-module-2.2.0 \
-
+```
 ./configure \
     --add-module=/home/adm_uatapigw/ngx-http-auth-jwt-module-2.2.0 \
     --prefix=/usr/share/nginx \
@@ -58,7 +72,8 @@ tar -xvzf nginx-1.27.2.tar.gz
     --with-http_v2_module \
     --with-http_realip_module \
     --with-http_addition_module
-
+```
 #Build nginx
-
+```
 make install .
+```
