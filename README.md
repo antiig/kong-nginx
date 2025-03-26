@@ -119,3 +119,56 @@ http {
     include /etc/nginx/sites-enabled/*.conf;
 }
 ```
+
+
+```
+server { 
+	listen 443 ssl default_server;
+	#server_name uat-apigateway.kingpower.com;
+	ssl_certificate /opt/certs/certificate.crt;
+	ssl_certificate_key /opt/certs/private.key;
+	location /admin-api/ {
+            proxy_set_header Host $host;
+            proxy_set_header X-Real-IP $remote_addr;
+            proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+            proxy_set_header X-Forwarded-Proto $scheme;
+            proxy_set_header X-Forwarded-Port 443;
+
+            proxy_pass http://localhost:8001;
+            rewrite ^/admin-api(/.*)? $1 break;
+        }
+	root /var/www/protected;
+        index index.html;
+        location /api {
+            proxy_set_header Host $host;
+            proxy_set_header X-Real-IP $remote_addr;
+            proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+            proxy_set_header X-Forwarded-Proto $scheme;
+            proxy_set_header X-Forwarded-Port 443;
+
+            proxy_pass http://localhost:8000;
+            #rewrite ^/api(/.*)? $1 break;
+        }
+
+        location /manager/ {
+            #auth_jwt_key "5cbd0fc3b24911163b2c076f11c71711ae3f71e5e83a761eab9e9101d900ac62";
+            auth_jwt_enabled on;
+            auth_jwt_algorithm RS256; # or RS256
+            auth_jwt_location COOKIE=auth-token;
+            auth_jwt_use_keyfile on;
+            auth_jwt_keyfile_path "/etc/nginx/keys/public.pem";
+            #auth_jwt_validate_email off;  # or off
+            proxy_set_header Host $host;
+            proxy_set_header X-Real-IP $remote_addr;
+            proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+            proxy_set_header X-Forwarded-Proto $scheme;
+            #proxy_set_header X-Forwarded-Port 443;
+
+            proxy_pass http://localhost:8002;
+            # Your protected content
+            #root /var/www/protected;
+            #index index.html;
+        }
+	error_page 401 /unauthorized.html;
+}
+```
