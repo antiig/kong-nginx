@@ -2,7 +2,7 @@
 ```
 apt install libtool-bin build-essential libfuse-dev libcurl4-openssl-dev libxml2-dev automake libtool pkg-config autoconf
 apt-get install autoconf automake libtool cmake mime-support unzip
-apt-get
+apt-get install zlib
 ```
 
 # install jansson https://github.com/benmcollins/libjwt/tree/v1.12.0
