@@ -78,7 +78,11 @@ tar -xvzf nginx-1.27.2.tar.gz
 ```
 make install .
 ```
-
+#Install Nginx
+```
+apt install nginx
+systemctl status nginx
+```
 #Config Nginx
 ## edit nginx.conf
 ```
